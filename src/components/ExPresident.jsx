@@ -67,8 +67,8 @@ const ExPresident = () => {
       role: "President 2024-2025",
       image: "https://media.licdn.com/dms/image/v2/D5603AQEOPGDkgnMb7Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1715680502419?e=1764201600&v=beta&t=g0c1vdnxp0vF4N7pnUxAdbtYSzvPKkYBmcDZRZBCCXw",
       profileImg: "https://media.licdn.com/dms/image/v2/D5603AQEOPGDkgnMb7Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1715680502419?e=1764201600&v=beta&t=g0c1vdnxp0vF4N7pnUxAdbtYSzvPKkYBmcDZRZBCCXw",
-      username: "@emilyrodriguez",
-      linkedin: "#"
+      username: "saiaryan",
+      linkedin: "https://www.linkedin.com/in/saiaryangoswami"
     },
     {
       id: 4,
