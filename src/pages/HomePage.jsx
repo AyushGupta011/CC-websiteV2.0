@@ -1,3 +1,4 @@
+import ExPresident from "../components/ExPresident";
 import Landing from "../components/Landing";
 import Offering from "../components/Offering";
 import About from "../components/about";
@@ -8,6 +9,8 @@ export default function HomePage() {
       <Landing />
       <Offering/>
       <About />
+      <ExPresident />
+      
     </div>
   );
 }

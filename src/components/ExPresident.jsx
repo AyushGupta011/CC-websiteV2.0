@@ -1,0 +1,250 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Linkedin } from 'lucide-react';
+
+const ExPresident = () => {
+  const row1Ref = useRef(null);
+  const row2Ref = useRef(null);
+  const row3Ref = useRef(null);
+  const [row1Scale, setRow1Scale] = useState(1);
+  const [row2Scale, setRow2Scale] = useState(1);
+  const [row3Scale, setRow3Scale] = useState(1);
+
+  useEffect(() => {
+    const calculateScale = (element) => {
+      if (!element) return 1;
+      
+      const rect = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementMiddle = rect.top + rect.height / 2;
+      const viewportMiddle = windowHeight / 2;
+      
+      // Calculate distance from viewport center
+      const distance = Math.abs(elementMiddle - viewportMiddle);
+      const maxDistance = windowHeight;
+      
+      // Scale from 0.7 to 1 based on distance
+      const scale = Math.max(0.7, 1 - (distance / maxDistance) * 0.3);
+      return scale;
+    };
+
+    const handleScroll = () => {
+      setRow1Scale(calculateScale(row1Ref.current));
+      setRow2Scale(calculateScale(row2Ref.current));
+      setRow3Scale(calculateScale(row3Ref.current));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const presidents = [
+    {
+      id: 1,
+      name: "Sarah Johnson",
+      skill: "Full Stack Developer",
+      role: "President 2020-2021",
+      image: "https://codechefabesec.netlify.app/img/teamimages/Screenshot%202024-09-22%20000645.webp",
+      profileImg: "https://codechefabesec.netlify.app/img/teamimages/Screenshot%202024-09-22%20000645.webp",
+      username: "@sarahjohnson",
+      linkedin: "#"
+    },
+    {
+      id: 2,
+      name: "Michael Chen",
+      skill: "UI/UX Designer",
+      role: "President 2019-2020",
+      image: "https://codechefabesec.netlify.app/img/teamimages/BhumikaArora_ccwebsite_Bhumika%20Arora.webp",
+      profileImg: "https://codechefabesec.netlify.app/img/teamimages/BhumikaArora_ccwebsite_Bhumika%20Arora.webp",
+      username: "@michaelchen",
+      linkedin: "#"
+    },
+    {
+      id: 3,
+      name: "Emily Rodriguez",
+      skill: "Product Manager",
+      role: "President 2018-2019",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=800&fit=crop",
+      profileImg: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+      username: "@emilyrodriguez",
+      linkedin: "#"
+    },
+    {
+      id: 4,
+      name: "David Kim",
+      skill: "DevOps Engineer",
+      role: "President 2017-2018",
+      image: "https://i.ibb.co/d04stVT/Whats-App-Image-2024-09-21-at-21-10-57-2716cdff.webp",
+      profileImg: "https://i.ibb.co/d04stVT/Whats-App-Image-2024-09-21-at-21-10-57-2716cdff.webp",
+      username: "@davidkim",
+      linkedin: "#"
+    },
+    {
+      id: 5,
+      name: "Jessica Martinez",
+      skill: "Data Scientist",
+      role: "President 2016-2017",
+      image: "https://codechefabesec.netlify.app/img/teamimages/IMG_20240920_093105_Abhinav%20Kumar%20Jha%20(1).webp",
+      profileImg: "https://codechefabesec.netlify.app/img/teamimages/IMG_20240920_093105_Abhinav%20Kumar%20Jha%20(1).webp",
+      username: "@jessicamartinez",
+      linkedin: "#"
+    }
+  ];
+
+  const PresidentCard = ({ president }) => {
+    const [rotation, setRotation] = useState({ x: 0, y: 0 });
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseMove = (e) => {
+      const card = e.currentTarget;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -20;
+      const rotateY = ((x - centerX) / centerX) * 20;
+      
+      setRotation({ x: rotateX, y: rotateY });
+    };
+
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+      setRotation({ x: 0, y: 0 });
+      setIsHovered(false);
+    };
+
+    return (
+      <div
+        className="relative w-full h-96 perspective-1000"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div
+          className="relative w-full h-full transition-all duration-500 ease-out"
+          style={{
+            transform: `perspective(1500px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(${isHovered ? 1.08 : 1}, ${isHovered ? 1.08 : 1}, ${isHovered ? 1.08 : 1})`,
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          
+          <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
+            
+            <img
+              src={president.image}
+              alt={president.name}
+              className="w-full h-full object-cover"
+            />
+            
+           
+            <div className="absolute top-0 left-0 right-0 p-6 bg-gradient-to-b from-black/70 via-black/40 to-transparent z-10">
+              <h3 className="text-white text-2xl font-bold mb-2">{president.name}</h3>
+              <p className="text-blue-300 text-sm font-medium mb-1">{president.skill}</p>
+              <p className="text-gray-200 text-sm">{president.role}</p>
+            </div>
+
+          
+            <div className="absolute bottom-0 left-0 right-0 p-5 bg-white/20 backdrop-blur-md z-20">
+              <div className="flex items-center justify-between">
+               
+                <div className="flex items-center gap-3">
+                  <img
+                    src={president.profileImg}
+                    alt={president.name}
+                    className="w-12 h-12 rounded-full border-2 border-white shadow-lg object-cover"
+                  />
+                  <div>
+                    <p className="text-white font-semibold text-sm">{president.username}</p>
+                    <p className="text-gray-200 text-xs">Online</p>
+                  </div>
+                </div>
+
+                <a
+                  href={president.linkedin}
+                  className="w-10 h-10 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-blue-500 hover:shadow-lg transition-all duration-300 hover:scale-110"
+                >
+                  <Linkedin className="w-5 h-5 text-white" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="lg:sticky lg:top-24 mt-40">
+            <h1 className="text-5xl font-bold text-gray-900 mb-6">
+              Our Legacy Leaders
+            </h1>
+            <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 mb-8"></div>
+            
+            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              Throughout our organization's history, we've been fortunate to have exceptional leaders who have shaped our vision and driven our success. Each president has brought unique perspectives, innovative ideas, and unwavering dedication to our community.
+            </p>
+            
+            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              These remarkable individuals have not only led with excellence but have also mentored the next generation of leaders, creating a lasting impact that continues to influence our organization today.
+            </p>
+            
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              Their contributions have been instrumental in establishing the strong foundation upon which we continue to build. We honor their service and celebrate the enduring legacy they've created.
+            </p>
+
+            {/*  */}
+          </div>
+
+          <div>
+            <div 
+              ref={row1Ref}
+              className="grid grid-cols-2 gap-6 mb-6 transition-all duration-700 ease-out"
+              style={{
+                transform: `scale(${row1Scale})`,
+                opacity: row1Scale
+              }}
+            >
+              <PresidentCard president={presidents[0]} />
+              <PresidentCard president={presidents[1]} />
+            </div>
+            
+            <div 
+              ref={row2Ref}
+              className="max-w-sm mx-auto mb-6 transition-all duration-700 ease-out"
+              style={{
+                transform: `scale(${row2Scale})`,
+                opacity: row2Scale
+              }}
+            >
+              <PresidentCard president={presidents[2]} />
+            </div>
+            
+            <div 
+              ref={row3Ref}
+              className="grid grid-cols-2 gap-6 transition-all duration-700 ease-out"
+              style={{
+                transform: `scale(${row3Scale})`,
+                opacity: row3Scale
+              }}
+            >
+              <PresidentCard president={presidents[3]} />
+              <PresidentCard president={presidents[4]} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ExPresident;
