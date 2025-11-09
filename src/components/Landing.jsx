@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Galaxy from "./Galaxy";
-import logo from "../assets/logo.png";
+import logo from "../../public/logo.png";
 import { FloatingDock } from "./ui/floating-dock";
 import { useNavigate } from "react-router-dom";
 import {
@@ -119,12 +119,12 @@ export default function Landing() {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="flex flex-wrap justify-center lg:justify-start gap-4 mt-12"
           >
-            <button className="group landing-btn-primary">
+            <button className="group landing-btn-primary cursor-pointer">
               <span className="relative z-10">Get Started</span>
               <div className="absolute inset-0 bg-linear-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
             </button>
 
-            <button className="group landing-btn-secondary">
+            <button className="group landing-btn-secondary cursor-pointer">
               <span className="relative z-10">Learn More</span>
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
             </button>
