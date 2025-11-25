@@ -1,6 +1,9 @@
 import Footer from "../components/Footer";
 import useLenis from "../hooks/useLenis";
 import { BackgroundOverlayCard } from "../components/BackgroundOverlayCard";
+import { GridScan } from "../components/GridScan";
+import ClickSpark from "../components/ClickSpark";
+import ElectricBorder from "../components/ElectricBorder";
 
 const events = [
   {
@@ -53,26 +56,55 @@ const events = [
   },
 ];
 
-
-
 export default function EventsPage() {
   useLenis();
 
   return (
-    <div className="w-full min-h-screen overflow-x-hidden bg-white text-black">
-      <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 md:px-10 flex flex-col items-center">
-        <h1 className="text-8xl font-bold text-center mb-12">
-          Our <span className="text-orange-600">Events</span>
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 place-items-center">
-          {events.map((event, index) => (
-            <a key={index} href={event.href} target="_blank" rel="noopener noreferrer" className="w-full">
-              <BackgroundOverlayCard {...event} />
-            </a>
-          ))}
+    <ClickSpark sparkColor="#FF9FFC" sparkRadius={50} sparkCount={12}>
+      <div className="w-full min-h-screen overflow-x-hidden bg-black text-white relative">
+        <div className="absolute inset-0 z-0">
+          <GridScan
+            sensitivity={0.55}
+            lineThickness={1}
+            linesColor="#2a2a3a"
+            gridScale={0.09}
+            scanColor="#FFA500"
+            scanOpacity={0.2}
+            enablePost
+            bloomIntensity={0.3}
+            chromaticAberration={0.005}
+            noiseIntensity={0.045}
+            scanGlow={1}
+          />
         </div>
+        <div className="relative z-10 min-h-screen pt-24 pb-20 px-4 sm:px-6 md:px-10 flex flex-col items-center">
+          <h1 className="text-8xl font-bold text-center mb-12">
+            Our <span className="text-orange-500">Events</span>
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 place-items-center">
+            {events.map((event, index) => (
+              <a
+                key={index}
+                href={event.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
+                <ElectricBorder
+                  color="#f09d0f"
+                  speed={1}
+                  chaos={0.7}
+                  thickness={2}
+                  style={{ borderRadius: "0.375rem" }} // Corresponds to rounded-md
+                >
+                  <BackgroundOverlayCard {...event} />
+                </ElectricBorder>
+              </a>
+            ))}
+          </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </ClickSpark>
   );
 }
